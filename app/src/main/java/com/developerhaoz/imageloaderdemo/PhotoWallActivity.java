@@ -29,8 +29,6 @@ public class PhotoWallActivity extends AppCompatActivity {
 
     private HashSet<String> mDirPaths = new HashSet<>();
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
