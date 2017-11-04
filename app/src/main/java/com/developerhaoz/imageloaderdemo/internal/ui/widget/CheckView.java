@@ -23,6 +23,8 @@ import com.developerhaoz.imageloaderdemo.R;
 
 public class CheckView extends View {
 
+
+    String uri = "content://media/external/file";
     public static final int UNCHECKED = Integer.MIN_VALUE;
     private static final float STROKE_WIDTH = 3.0f;
     private static final float SHADOW_WIDTH = 6.0f;
