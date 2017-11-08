@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 /**
+ * 测试 Loader 机制的 Activity
+ *
  * @author Haoz
  * @date 2017/10/28.
  */
