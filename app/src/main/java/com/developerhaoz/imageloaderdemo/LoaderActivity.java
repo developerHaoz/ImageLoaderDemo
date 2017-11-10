@@ -30,7 +30,6 @@ public class LoaderActivity extends AppCompatActivity {
         mListView = (ListView) findViewById(R.id.loader_lv);
         mAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1,
                 null, new String[] {"name"}, new int[] {android.R.id.text1}, 0);
-
     }
 }
 
