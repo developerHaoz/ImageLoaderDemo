@@ -103,6 +103,7 @@ public class Album implements Parcelable {
 
     /**
      * 兄弟，id = -1，究竟代表什么
+     * emmm,好像代表所有的专辑
      *
      * @return
      */
