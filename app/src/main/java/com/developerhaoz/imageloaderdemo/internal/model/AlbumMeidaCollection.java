@@ -94,5 +94,4 @@ public class AlbumMeidaCollection implements LoaderManager.LoaderCallbacks<Curso
         void onAlbumMediaReset();
     }
 
-
 }
