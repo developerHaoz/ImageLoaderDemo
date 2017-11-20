@@ -6,12 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.developerhaoz.imageloaderdemo.R;
 import com.zhihu.matisse.internal.entity.Item;
 import com.zhihu.matisse.internal.ui.widget.CheckView;
 
@@ -42,7 +40,7 @@ public class MediaGrid extends SquareFrameLayout implements View.OnClickListener
     }
 
     private void init(Context context){
-        LayoutInflater.from(context).inflate(R.layout.meida)
+//        LayoutInflater.from(context).inflate(R.layout.meida);
     }
 
 

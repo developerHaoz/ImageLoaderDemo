@@ -6,6 +6,13 @@
               android:background="#ffffff"
     >
 
+    <Button
+        android:id="@+id/meida_btn_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/media_rv_photo_wall"
         android:layout_width="match_parent"
