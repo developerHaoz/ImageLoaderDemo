@@ -23,7 +23,6 @@ public class AlbumCollectionTest implements LoaderManager.LoaderCallbacks<Cursor
     private AlbumCallbacksTest mCallbacks;
     private int mCurrentSelection;
 
-
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Context context = mContext.get();
