@@ -3,10 +3,14 @@ package com.developerhaoz.imageloaderdemo.internal.ui.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.RadialGradient;
 import android.graphics.Rect;
+import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
@@ -23,8 +27,6 @@ import com.developerhaoz.imageloaderdemo.R;
 
 public class CheckView extends View {
 
-
-    String uri = "content://media/external/file";
     public static final int UNCHECKED = Integer.MIN_VALUE;
     private static final float STROKE_WIDTH = 3.0f;
     private static final float SHADOW_WIDTH = 6.0f;
@@ -62,12 +64,11 @@ public class CheckView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
-        int sizeSpec = MeasureSpec.makeMeasureSpec((int) (SIZE * mDensity), MeasureSpec.EXACTLY);
+        int sizeSpec = MeasureSpec.makeMeasureSpec((int)(SIZE * mDensity), MeasureSpec.EXACTLY);
         super.onMeasure(sizeSpec, sizeSpec);
     }
 
-    private void init(Context context){
+    private void init(Context context) {
         mDensity = context.getResources().getDisplayMetrics().density;
 
         mStrokePaint = new Paint();
@@ -78,7 +79,8 @@ public class CheckView extends View {
         TypedArray ta = getContext().getTheme().obtainStyledAttributes(new int[]{R.attr.item_checkCircle_borderColor});
         int defaultColor = ResourcesCompat.getColor(
                 getResources(), R.color.zhihu_item_checkCircle_borderColor,
-                getContext().getTheme());
+                getContext().getTheme()
+        );
 
         int color = ta.getColor(0, defaultColor);
         ta.recycle();
@@ -89,8 +91,8 @@ public class CheckView extends View {
     }
 
     public void setChecked(boolean checked){
-        if(mCountable) {
-            throw new IllegalStateException("CheckView is countable, call setCheckedNum() instead.");
+        if(mCountable){
+            throw new IllegalStateException("CheckView is countable, call setCheckNum() instead.");
         }
         mChecked = checked;
         invalidate();
@@ -100,20 +102,20 @@ public class CheckView extends View {
         mCountable = countable;
     }
 
-    public void setCheckedNum(int checkedNum){
+    public void setCheckNum(int checkedNum){
         if(!mCountable){
-            throw new IllegalStateException("CheckView is not countable, call setChecked() instead");
-        }
-        if(checkedNum != UNCHECKED && checkedNum <= 0){
-            throw new IllegalArgumentException("checked num can't be negative");
+            throw new IllegalStateException("CheckView is not countable, call setCheck() instean");
         }
 
+        if(checkedNum != UNCHECKED && checkedNum <= 0){
+            throw new IllegalArgumentException("checked num can't be negative.");
+        }
         mCheckNum = checkedNum;
         invalidate();
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(boolean enabled){
         if(mEnabled != enabled){
             mEnabled = enabled;
             invalidate();
@@ -123,8 +125,69 @@ public class CheckView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
     }
+
+    private void initShadowPaint(){
+        if(mShadowPaint == null){
+            mShadowPaint = new Paint();
+            mShadowPaint.setAntiAlias(true);
+
+            float outerRadius = STROKE_RADIUS + STROKE_WIDTH / 2;
+            float innerRadius = outerRadius - STROKE_WIDTH;
+            float gradientRadius = outerRadius + SHADOW_WIDTH;
+            float stop0 = (innerRadius - SHADOW_WIDTH) / gradientRadius;
+            float stop1 = innerRadius / gradientRadius;
+            float stop2 = outerRadius / gradientRadius;
+            float stop3 = 1.0f;
+            mShadowPaint.setShader(
+                    new RadialGradient((float) SIZE * mDensity / 2,
+                            (float) SIZE * mDensity / 2,
+                            gradientRadius * mDensity,
+                            new int[]{Color.parseColor("#00000000"), Color.parseColor("#00000000"),
+                            Color.parseColor("#00000000"), Color.parseColor("#00000000")},
+                            new float[]{stop0, stop1, stop2, stop3},
+                            Shader.TileMode.CLAMP));
+        }
+    }
+
+    private void initBackgroundPaint(){
+        if(mBackgroundPaint == null){
+            mBackgroundPaint = new Paint();
+            mBackgroundPaint.setAntiAlias(true);
+            mBackgroundPaint.setStyle(Paint.Style.FILL);
+            TypedArray ta = getContext().getTheme()
+                    .obtainStyledAttributes(new int[]{R.attr.item_checkCircle_backgroundColor});
+
+            int defaultColor = ResourcesCompat.getColor(getResources(),
+                    R.color.zhihu_item_checkCircle_backgroundColor,
+                    getContext().getTheme());
+
+            int color = ta.getColor(0, defaultColor);
+            ta.recycle();
+            mBackgroundPaint.setColor(color);
+        }
+    }
+
+    private void initTextPaint(){
+        if(mTextPaint == null){
+            mTextPaint  = new TextPaint();
+            mTextPaint.setAntiAlias(true);
+            mTextPaint.setColor(Color.WHITE);
+            mTextPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            mTextPaint.setTextSize(12.0f * mDensity);
+        }
+    }
+
+    private Rect getCheckRect(){
+        if(mCheckRect == null){
+            int rectPadding = (int) (SIZE * mDensity / 2 - CONTENT_SIZE * mDensity / 2);
+            mCheckRect = new Rect(rectPadding, rectPadding,
+                    (int) (SIZE * mDensity - rectPadding), (int) (SIZE * mDensity - rectPadding));
+        }
+
+        return mCheckRect;
+    }
+
 }
 
 

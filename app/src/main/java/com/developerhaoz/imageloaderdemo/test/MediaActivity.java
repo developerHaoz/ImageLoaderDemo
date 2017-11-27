@@ -67,7 +67,7 @@ public class MediaActivity extends AppCompatActivity implements MediaCollection.
 
     @Override
     public void onAlbumLoad(Cursor cursor) {
-
+        String test = "";
         Log.d(TAG, "onAlbumLoad: " + "hello world");
         Log.d(TAG, "onAlbumLoad: cursor'size: " + cursor.getCount());
         while(cursor.moveToNext()){
