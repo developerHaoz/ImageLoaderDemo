@@ -12,7 +12,6 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
@@ -31,10 +30,14 @@ public class CheckView extends View {
     private static final float SHADOW_WIDTH = 6.0f;
     private static final int SIZE = 48;
 
+
+
     private static final float STROKE_RADIUS = 11.5f;
     private static final float BG_RADIUS = 11.0f;
     private static final int CONTENT_SIZE = 16;
     private boolean mCountable;
+
+
 
     private boolean mChecked;
     private int mCheckedNum;
@@ -47,25 +50,25 @@ public class CheckView extends View {
     private Rect mCheckRect;
     private boolean mEnabled = true;
 
-
     public CheckView(Context context) {
         super(context);
         init(context);
     }
 
-    public CheckView(Context context, @Nullable AttributeSet attrs) {
+    public CheckView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public CheckView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public CheckView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int sizeSpec = MeasureSpec.makeMeasureSpec((int)(SIZE * mDensity), MeasureSpec.EXACTLY);
+
+        int sizeSpec = MeasureSpec.makeMeasureSpec((int) (SIZE * mDensity), MeasureSpec.EXACTLY);
         super.onMeasure(sizeSpec, sizeSpec);
     }
 
@@ -80,9 +83,7 @@ public class CheckView extends View {
         TypedArray ta = getContext().getTheme().obtainStyledAttributes(new int[]{R.attr.item_checkCircle_borderColor});
         int defaultColor = ResourcesCompat.getColor(
                 getResources(), R.color.zhihu_item_checkCircle_borderColor,
-                getContext().getTheme()
-        );
-
+                getContext().getTheme());
         int color = ta.getColor(0, defaultColor);
         ta.recycle();
         mStrokePaint.setColor(color);
@@ -91,24 +92,23 @@ public class CheckView extends View {
                 R.drawable.ic_check_white_18dp, context.getTheme());
     }
 
-    public void setChecked(boolean checked){
-        if(mCountable){
+    public void setChecked(boolean checked) {
+        if (mCountable) {
             throw new IllegalStateException("CheckView is countable, call setCheckNum() instead.");
         }
         mChecked = checked;
         invalidate();
     }
 
-    public void setCountable(boolean countable){
+    public void setCountable(boolean countable) {
         mCountable = countable;
     }
 
-    public void setCheckNum(int checkedNum){
-        if(!mCountable){
+    public void setCheckNum(int checkedNum) {
+        if (!mCountable) {
             throw new IllegalStateException("CheckView is not countable, call setCheck() instean");
         }
-
-        if(checkedNum != UNCHECKED && checkedNum <= 0){
+        if (checkedNum != UNCHECKED && checkedNum <= 0) {
             throw new IllegalArgumentException("checked num can't be negative.");
         }
         mCheckedNum = checkedNum;
@@ -116,12 +116,13 @@ public class CheckView extends View {
     }
 
     @Override
-    public void setEnabled(boolean enabled){
-        if(mEnabled != enabled){
+    public void setEnabled(boolean enabled) {
+        if (mEnabled != enabled) {
             mEnabled = enabled;
             invalidate();
         }
     }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -162,8 +163,8 @@ public class CheckView extends View {
         setAlpha(mEnabled ? 1.0f : 0.5f);
     }
 
-    private void initShadowPaint(){
-        if(mShadowPaint == null){
+    private void initShadowPaint() {
+        if (mShadowPaint == null) {
             mShadowPaint = new Paint();
             mShadowPaint.setAntiAlias(true);
 
@@ -178,8 +179,8 @@ public class CheckView extends View {
                     new RadialGradient((float) SIZE * mDensity / 2,
                             (float) SIZE * mDensity / 2,
                             gradientRadius * mDensity,
-                            new int[]{Color.parseColor("#00000000"), Color.parseColor("#00000000"),
-                            Color.parseColor("#00000000"), Color.parseColor("#00000000")},
+                            new int[]{Color.parseColor("#00000000"), Color.parseColor("#0D000000"),
+                                    Color.parseColor("#0D000000"), Color.parseColor("#00000000")},
                             new float[]{stop0, stop1, stop2, stop3},
                             Shader.TileMode.CLAMP));
         }
