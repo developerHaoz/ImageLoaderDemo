@@ -17,7 +17,6 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
-
 import com.developerhaoz.imageloaderdemo.R;
 
 /**
@@ -31,12 +30,14 @@ public class CheckView extends View {
     private static final float STROKE_WIDTH = 3.0f;
     private static final float SHADOW_WIDTH = 6.0f;
     private static final int SIZE = 48;
+
     private static final float STROKE_RADIUS = 11.5f;
     private static final float BG_RADIUS = 11.0f;
     private static final int CONTENT_SIZE = 16;
     private boolean mCountable;
+
     private boolean mChecked;
-    private int mCheckNum;
+    private int mCheckedNum;
     private Paint mStrokePaint;
     private Paint mBackgroundPaint;
     private TextPaint mTextPaint;
@@ -110,7 +111,7 @@ public class CheckView extends View {
         if(checkedNum != UNCHECKED && checkedNum <= 0){
             throw new IllegalArgumentException("checked num can't be negative.");
         }
-        mCheckNum = checkedNum;
+        mCheckedNum = checkedNum;
         invalidate();
     }
 
@@ -121,10 +122,44 @@ public class CheckView extends View {
             invalidate();
         }
     }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        // draw outer and inner shadow
+        initShadowPaint();
+        canvas.drawCircle((float) SIZE * mDensity / 2, (float) SIZE * mDensity / 2,
+                (STROKE_RADIUS + STROKE_WIDTH / 2 + SHADOW_WIDTH) * mDensity, mShadowPaint);
+
+        // draw white stroke
+        canvas.drawCircle((float) SIZE * mDensity / 2, (float) SIZE * mDensity / 2,
+                STROKE_RADIUS * mDensity, mStrokePaint);
+
+        // draw content
+        if (mCountable) {
+            if (mCheckedNum != UNCHECKED) {
+                initBackgroundPaint();
+                canvas.drawCircle((float) SIZE * mDensity / 2, (float) SIZE * mDensity / 2,
+                        BG_RADIUS * mDensity, mBackgroundPaint);
+                initTextPaint();
+                String text = String.valueOf(mCheckedNum);
+                int baseX = (int) (canvas.getWidth() - mTextPaint.measureText(text)) / 2;
+                int baseY = (int) (canvas.getHeight() - mTextPaint.descent() - mTextPaint.ascent()) / 2;
+                canvas.drawText(text, baseX, baseY, mTextPaint);
+            }
+        } else {
+            if (mChecked) {
+                initBackgroundPaint();
+                canvas.drawCircle((float) SIZE * mDensity / 2, (float) SIZE * mDensity / 2,
+                        BG_RADIUS * mDensity, mBackgroundPaint);
+
+                mCheckDrawable.setBounds(getCheckRect());
+                mCheckDrawable.draw(canvas);
+            }
+        }
+
+        // enable hint
+        setAlpha(mEnabled ? 1.0f : 0.5f);
     }
 
     private void initShadowPaint(){
@@ -150,16 +185,15 @@ public class CheckView extends View {
         }
     }
 
-    private void initBackgroundPaint(){
-        if(mBackgroundPaint == null){
+    private void initBackgroundPaint() {
+        if (mBackgroundPaint == null) {
             mBackgroundPaint = new Paint();
             mBackgroundPaint.setAntiAlias(true);
             mBackgroundPaint.setStyle(Paint.Style.FILL);
             TypedArray ta = getContext().getTheme()
                     .obtainStyledAttributes(new int[]{R.attr.item_checkCircle_backgroundColor});
-
-            int defaultColor = ResourcesCompat.getColor(getResources(),
-                    R.color.zhihu_item_checkCircle_backgroundColor,
+            int defaultColor = ResourcesCompat.getColor(
+                    getResources(), R.color.zhihu_item_checkCircle_backgroundColor,
                     getContext().getTheme());
 
             int color = ta.getColor(0, defaultColor);
@@ -168,9 +202,9 @@ public class CheckView extends View {
         }
     }
 
-    private void initTextPaint(){
-        if(mTextPaint == null){
-            mTextPaint  = new TextPaint();
+    private void initTextPaint() {
+        if (mTextPaint == null) {
+            mTextPaint = new TextPaint();
             mTextPaint.setAntiAlias(true);
             mTextPaint.setColor(Color.WHITE);
             mTextPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
@@ -178,8 +212,9 @@ public class CheckView extends View {
         }
     }
 
-    private Rect getCheckRect(){
-        if(mCheckRect == null){
+    // rect for drawing checked number or mark
+    private Rect getCheckRect() {
+        if (mCheckRect == null) {
             int rectPadding = (int) (SIZE * mDensity / 2 - CONTENT_SIZE * mDensity / 2);
             mCheckRect = new Rect(rectPadding, rectPadding,
                     (int) (SIZE * mDensity - rectPadding), (int) (SIZE * mDensity - rectPadding));

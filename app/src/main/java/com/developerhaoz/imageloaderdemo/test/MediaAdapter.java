@@ -4,7 +4,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,7 +37,6 @@ public class MediaAdapter extends BaseCursorAdapter<RecyclerView.ViewHolder> {
         Glide.with(((MediaViewHolder) holder).mImageView.getContext())
                 .load(imageUri)
                 .into(((MediaViewHolder) holder).mImageView);
-        ContactsContract.Contacts._ID
     }
 
     @Override
