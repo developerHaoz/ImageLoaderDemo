@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.developerhaoz.imageloaderdemo.R;
 import com.developerhaoz.imageloaderdemo.internal.entity.Item;
 import com.developerhaoz.imageloaderdemo.internal.entity.SelectionSpec;
