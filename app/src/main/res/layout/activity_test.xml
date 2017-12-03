@@ -7,11 +7,7 @@
               android:padding="48dp"
     >
 
-    <com.developerhaoz.imageloaderdemo.internal.ui.widget.CheckView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        />
+
 
 
 </LinearLayout>

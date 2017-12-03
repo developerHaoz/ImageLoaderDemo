@@ -18,6 +18,8 @@ import com.zhihu.matisse.internal.loader.AlbumLoader;
 
 public class Album implements Parcelable {
 
+    String str = "";
+
     public static final Parcelable.Creator<Album> CREATOR = new Parcelable.Creator<Album>() {
         @Override
         public Album createFromParcel(Parcel source) {
@@ -111,20 +113,3 @@ public class Album implements Parcelable {
         return ALBUM_ID_ALL.equals(mId);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

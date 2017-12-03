@@ -7,10 +7,10 @@ import com.developerhaoz.imageloaderdemo.MimeType;
 import com.developerhaoz.imageloaderdemo.R;
 import com.developerhaoz.imageloaderdemo.engine.ImageEngine;
 import com.developerhaoz.imageloaderdemo.engine.impl.GlideEngine;
+import com.developerhaoz.imageloaderdemo.filter.Filter;
 
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Filter;
 
 /**
  * @author Haoz
