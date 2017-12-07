@@ -67,7 +67,6 @@ public class CheckView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
         int sizeSpec = MeasureSpec.makeMeasureSpec((int) (SIZE * mDensity), MeasureSpec.EXACTLY);
         super.onMeasure(sizeSpec, sizeSpec);
     }
